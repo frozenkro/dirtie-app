@@ -77,7 +77,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    title: 'Device Config',
+    title: 'Devices',
     icon: <DeviceHubIcon />,
   },
   {
