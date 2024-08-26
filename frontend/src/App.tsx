@@ -4,6 +4,7 @@ import Navigation from "./nav/Navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Login from './login/Login';
 import { main } from '../wailsjs/go/models';
+import { User } from './models/User';
 
 const theme = createTheme({
   palette: {
@@ -16,15 +17,15 @@ const theme = createTheme({
   }
 });
 
-export const UserContext = React.createContext<main.User | null>(null);
+export const UserContext = React.createContext<User | null>(null);
 
 function App() {
-  const [userContext, setUserContext] = React.useState<main.User | null>();
+  const [userContext, setUserContext] = React.useState<User | null>();
   const content = userContext ?
     <UserContext.Provider value={userContext}>
       <Navigation />
     </UserContext.Provider>
-    : <Login setUserCb={(user: main.User) => setUserContext(user)}/>
+    : <Login setUserCb={(user: User) => setUserContext(user)}/>
 
   return (
     <div id="App">
