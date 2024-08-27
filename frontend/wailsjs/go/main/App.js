@@ -14,6 +14,10 @@ export function GetLastPing(arg1) {
   return window['go']['main']['App']['GetLastPing'](arg1);
 }
 
+export function Greet(arg1) {
+  return window['go']['main']['App']['Greet'](arg1);
+}
+
 export function TryConfigure(arg1) {
   return window['go']['main']['App']['TryConfigure'](arg1);
 }

@@ -18,6 +18,7 @@ import { NavListItem } from './NavListItem';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import Title from './Title';
+import Devices from '../devices/Devices';
 
 const drawerWidth: number = 240;
 
@@ -70,7 +71,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 type NavItem = {
-  title: String;
+  title: string;
   icon: React.ReactNode;
   content?: React.ReactNode;
 }
@@ -79,6 +80,7 @@ const navItems: NavItem[] = [
   {
     title: 'Devices',
     icon: <DeviceHubIcon />,
+    content: <Devices />
   },
   {
     title: 'Analytics',
@@ -97,6 +99,7 @@ export default function Navigation() {
 
   const navListItems = navItems.map(item => {
     return (<NavListItem 
+      key={item.title}
       title={item.title}
       icon={item.icon}
       onClickCb={(title: String) => {
@@ -128,20 +131,7 @@ export default function Navigation() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
           <Title title={currentPage.title} />
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -159,7 +149,7 @@ export default function Navigation() {
         </Toolbar>
         <Divider />
         <List component="nav">
-        {navListItems}
+          {navListItems}
         </List>
       </Drawer>
       <Box
@@ -176,6 +166,7 @@ export default function Navigation() {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          {currentPage.content}
         </Container>
       </Box>
     </Box>

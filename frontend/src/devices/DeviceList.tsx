@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { main } from '../../wailsjs/go/models';
-import { GetDeviceList } from '../../wailsjs/go/main/App';
+import { GetDeviceList, Greet } from '../../wailsjs/go/main/App';
 import { UserContext } from '../App';
 
 interface IDeviceListProps {
@@ -11,6 +11,7 @@ interface IDeviceListProps {
 
 export default function DeviceList(props: IDeviceListProps) {
   const [devices, setDevices] = React.useState<main.Device[]>();
+  const [greeting, setGreeting] = React.useState('Not Greeted yet');
   //
   // TODO this should be `as main.User` but the generated ts models 
   // aren't getting properties from the go structs
@@ -22,6 +23,14 @@ export default function DeviceList(props: IDeviceListProps) {
       setDevices(devices);
     };
     getDevices();
+
+
+    async function getGreeting() {
+      const g = await Greet("TEST");
+      setGreeting(g);
+    }
+    getGreeting();
+      
   }, []);
 
   return <>
@@ -35,6 +44,7 @@ export default function DeviceList(props: IDeviceListProps) {
             height: 240,
           }}
         >
+        {greeting}
         </Paper>
       </Grid>
       <Grid item xs={12} md={4} lg={3}>

@@ -4,7 +4,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 interface NavItemProps {
-  title: String;
+  key: string;
+  title: string;
   onClickCb: CallableFunction;
   icon: React.ReactNode;
 }

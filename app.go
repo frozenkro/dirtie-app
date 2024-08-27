@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+  "fmt"
   "time"
 )
 
@@ -11,26 +12,26 @@ type App struct {
 }
 
 type Device struct {
-  oid string
-  name string
-  ssid string
+  oid string `json:"oid"`
+  name string `json:"name"`
+  ssid string `json:"ssid"`
 }
 
 type DeviceConfigArgs struct {
-  name string
-  ssid string
-  password string
+  name string `json:"name"`
+  ssid string `json:"ssid"`
+  password string `json:"password"`
 }
 
 type User struct {
-  id int
-  username string
-  token string
+  id int `json:"id"`
+  username string `json:"username"`
+  token string `json:"token"`
 }
 
 type LoginArgs struct {
-  username string
-  password string 
+  username string `json:"username"`
+  password string `json:"password"`
 }
 
 // NewApp creates a new App application struct
@@ -72,17 +73,23 @@ func (a *App) GetLastPing(oid string) time.Time {
 /*---------------------------------
 MOCK METHOD, to be relocated and implemented later
 ----------------------------------*/
-func (a *App) TryLogin(args LoginArgs) (User, error) {
-  return User { id: 0, username: "testusername", token: "testtoken" }, nil
+func (a *App) TryLogin(args LoginArgs) User {
+  fmt.Printf("attempt login with username '%s' and password '%s'\n", args.username, args.password)
+  return User { id: 0, username: "testusername", token: "testtoken" }
 }
 
 /*---------------------------------
 MOCK METHOD, to be relocated and implemented later
 ----------------------------------*/
-func (a *App) FindUsbDevice() (string, error) {
-  return "/dev/TESTUSBDEVICE0", nil
+func (a *App) FindUsbDevice() string {
+  return "/dev/TESTUSBDEVICE0"
 }
 
-func (a *App) TryConfigure(args DeviceConfigArgs) (bool, error) {
-  return true, nil
+func (a *App) TryConfigure(args DeviceConfigArgs) bool {
+  return true
+}
+
+
+func (a *App) Greet(name string) string {
+	return fmt.Sprintf("Hello %s, It's show time!", name)
 }

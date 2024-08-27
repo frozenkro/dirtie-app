@@ -9,6 +9,8 @@ export function GetDeviceList(arg1:number):Promise<Array<main.Device>>;
 
 export function GetLastPing(arg1:string):Promise<time.Time>;
 
+export function Greet(arg1:string):Promise<string>;
+
 export function TryConfigure(arg1:main.DeviceConfigArgs):Promise<boolean>;
 
 export function TryLogin(arg1:main.LoginArgs):Promise<main.User>;
