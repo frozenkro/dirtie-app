@@ -5,6 +5,7 @@ import { auth } from '../firebase';
 import { auth as uiAuth } from 'firebaseui';
 import { EmailAuthProvider, GoogleAuthProvider, UserCredential } from 'firebase/auth';
 import { User } from '../models/User';
+import '../../node_modules/firebaseui/dist/firebaseui.css';
 
 interface ILoginProps {
   setUserCb: (user: User) => void;
@@ -42,7 +43,8 @@ export default function Login(props: ILoginProps) {
   };
 
   React.useEffect(() => {
-    const fbUI = new uiAuth.AuthUI(auth);
+    const existingAuth = uiAuth.AuthUI.getInstance();
+    const fbUI = existingAuth || new uiAuth.AuthUI(auth);
     setFbUI(fbUI);
     fbUI.start('#firebasesui-auth-container', {
       callbacks: {
@@ -78,9 +80,11 @@ export default function Login(props: ILoginProps) {
   // }, []);
   return (
     <section>
-      <h1>Welcome to Dirtie `{'>:)'}`</h1>
+      <h1>Let's Get Dirtie</h1>
       <div id="firebasesui-auth-container"></div>
+      { isLoading ? 
       <div id="loader">Loading...</div>
+      : '' }
     </section>
   );
 }
