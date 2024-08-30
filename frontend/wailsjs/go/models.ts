@@ -1,9 +1,8 @@
 export namespace main {
 	
 	export class Device {
-	    oid: string;
+	    deviceId: string;
 	    name: string;
-	    ssid: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Device(source);
@@ -11,9 +10,8 @@ export namespace main {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.oid = source["oid"];
+	        this.deviceId = source["deviceId"];
 	        this.name = source["name"];
-	        this.ssid = source["ssid"];
 	    }
 	}
 	export class DeviceConfigArgs {
@@ -32,23 +30,10 @@ export namespace main {
 	        this.password = source["password"];
 	    }
 	}
-	export class LoginArgs {
-	    username: string;
-	    password: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new LoginArgs(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.username = source["username"];
-	        this.password = source["password"];
-	    }
-	}
 	export class User {
-	    id: number;
-	    username: string;
+	    userId: number;
+	    email: string;
+	    displayName: string;
 	    token: string;
 	
 	    static createFrom(source: any = {}) {
@@ -57,8 +42,9 @@ export namespace main {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.id = source["id"];
-	        this.username = source["username"];
+	        this.userId = source["userId"];
+	        this.email = source["email"];
+	        this.displayName = source["displayName"];
 	        this.token = source["token"];
 	    }
 	}

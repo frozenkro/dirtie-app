@@ -11,26 +11,21 @@ type App struct {
 	ctx context.Context
 }
 
+type User struct {
+  UserId int `json:"userId"`
+  Email string `json:"email"`
+  DisplayName string `json:"displayName"`
+  Token string `json:"token"`
+}
+
 type Device struct {
-  oid string `json:"oid"`
+  device_id string `json:"deviceId"`
   name string `json:"name"`
-  ssid string `json:"ssid"`
 }
 
 type DeviceConfigArgs struct {
   name string `json:"name"`
   ssid string `json:"ssid"`
-  password string `json:"password"`
-}
-
-type User struct {
-  id int `json:"id"`
-  username string `json:"username"`
-  token string `json:"token"`
-}
-
-type LoginArgs struct {
-  username string `json:"username"`
   password string `json:"password"`
 }
 
@@ -45,20 +40,46 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+func (a *App) SignIn(email string, password string) User {
+  fmt.Printf("Login request %v | %v", email, password)
+  return User{
+    UserId:  0,
+    Email: "test@email.com",
+    DisplayName: "test guy",
+    Token: "asdf",
+  }
+}
+
+func (a *App) CreateUser(email string, password string, name string) *User {
+  fmt.Printf("Creating user %v | %v | %v", email, password, name)
+  return &User{
+    UserId:  0,
+    Email: "test@email.com",
+    DisplayName: "test guy",
+    Token: "asdf",
+  }
+}
+
+func (a *App) ResetPw(email string) {
+  fmt.Printf("Resetting pw %v", email)
+}
+
+func (a *App) SignOut(email string) {
+  fmt.Printf("Signing out %v", email)
+}
+
 /*---------------------------------
 MOCK METHOD, to be relocated and implemented later
 ----------------------------------*/
 func (a *App) GetDeviceList(userId int) []Device {
   return []Device {
     {
-      oid: "testoid1",
+      device_id: "testid1",
       name: "testdevice1",
-      ssid: "testssid1",
     },
     {
-      oid: "testoid2",
+      device_id: "testid2",
       name: "testdevice2",
-      ssid: "testssid2",
     },
   }
 }
@@ -66,16 +87,8 @@ func (a *App) GetDeviceList(userId int) []Device {
 /*---------------------------------
 MOCK METHOD, to be relocated and implemented later
 ----------------------------------*/
-func (a *App) GetLastPing(oid string) time.Time {
+func (a *App) GetLastPing(device_id string) time.Time {
   return time.Now(); 
-}
-
-/*---------------------------------
-MOCK METHOD, to be relocated and implemented later
-----------------------------------*/
-func (a *App) TryLogin(args LoginArgs) User {
-  fmt.Printf("attempt login with username '%s' and password '%s'\n", args.username, args.password)
-  return User { id: 0, username: "testusername", token: "testtoken" }
 }
 
 /*---------------------------------
@@ -87,9 +100,4 @@ func (a *App) FindUsbDevice() string {
 
 func (a *App) TryConfigure(args DeviceConfigArgs) bool {
   return true
-}
-
-
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
 }

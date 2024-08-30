@@ -1,10 +1,9 @@
-import * as React from 'react';
 import './App.css';
 import Navigation from "./nav/Navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Login from './login/Login';
-import { main } from '../wailsjs/go/models';
-import { User } from './models/User';
+import { useAuth } from './hooks/useAuth';
+
 
 const theme = createTheme({
   palette: {
@@ -17,15 +16,11 @@ const theme = createTheme({
   }
 });
 
-export const UserContext = React.createContext<User | null>(null);
-
 function App() {
-  const [userContext, setUserContext] = React.useState<User | null>();
-  const content = userContext ?
-    <UserContext.Provider value={userContext}>
+  const { user } = useAuth();
+  const content = user ?
       <Navigation />
-    </UserContext.Provider>
-    : <Login setUserCb={(user: User) => setUserContext(user)}/>
+    : <Login />
 
   return (
     <div id="App">
