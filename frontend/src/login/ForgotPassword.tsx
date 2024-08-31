@@ -10,11 +10,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { useAuth } from '../hooks/useAuth';
 
 interface ForgotPasswordProps {
-  open: boolean;
+  show: boolean;
   handleClose: () => void;
 }
 
-export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
+export default function ForgotPassword({ show, handleClose }: ForgotPasswordProps) {
   const { resetPw } = useAuth();
   const [email, setEmail] = React.useState<string>();
 
@@ -26,7 +26,7 @@ export default function ForgotPassword({ open, handleClose }: ForgotPasswordProp
 
   return (
     <Dialog
-      open={open}
+      open={show}
       onClose={handleClose}
       PaperProps={{
         component: 'form',

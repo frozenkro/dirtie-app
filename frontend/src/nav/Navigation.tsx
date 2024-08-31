@@ -17,7 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavListItem } from './NavListItem';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import Title from './Title';
+import Title from '../core/Title';
 import Devices from '../devices/Devices';
 
 const drawerWidth: number = 240;

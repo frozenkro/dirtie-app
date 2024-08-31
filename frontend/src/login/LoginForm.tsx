@@ -1,14 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
+import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import {
   styled,
@@ -34,18 +31,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: '100%',
-  padding: 20,
-  backgroundImage:
-    'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-  backgroundRepeat: 'no-repeat',
-  ...theme.applyStyles('dark', {
-    backgroundImage:
-      'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-  }),
-}));
-
 interface ILoginFormProps {
   loginCb: (email: string, pw: string) => void;
   createAcctCb: (email: string, pw: string, name: string) => void;
@@ -64,6 +49,7 @@ type LoginDynamicTextFields = {
 }
 
 export default function LoginForm(props: ILoginFormProps) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -104,11 +90,13 @@ export default function LoginForm(props: ILoginFormProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
+    if (!validateInputs()) {
+      setIsLoading(false);
+      return;
+    }
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
     const email = data.get('email')?.toString();
     const password = data.get('password')?.toString();
     const name = data.get('name')?.toString();
@@ -119,6 +107,8 @@ export default function LoginForm(props: ILoginFormProps) {
     else if (loginMode == LoginMode.SignUp) {
       props.createAcctCb(email as string, password as string, name as string);
     }
+
+    setIsLoading(false);
   };
 
   const validateInputs = () => {
@@ -160,7 +150,6 @@ export default function LoginForm(props: ILoginFormProps) {
   };
 
   return (
-    <SignInContainer direction="column" justifyContent="space-between">
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -195,6 +184,7 @@ export default function LoginForm(props: ILoginFormProps) {
                 autoFocus
                 required
                 fullWidth
+                disabled={isLoading}
                 variant="outlined"
                 color={nameError ? 'error' : 'primary'}
                 sx={{ ariaLabel: 'name' }}
@@ -212,6 +202,7 @@ export default function LoginForm(props: ILoginFormProps) {
               autoFocus
               required
               fullWidth
+              disabled={isLoading}
               variant="outlined"
               color={emailError ? 'error' : 'primary'}
               sx={{ ariaLabel: 'email' }}
@@ -240,23 +231,25 @@ export default function LoginForm(props: ILoginFormProps) {
               autoFocus
               required
               fullWidth
+              disabled={isLoading}
               variant="outlined"
               color={passwordError ? 'error' : 'primary'}
             />
           </FormControl>
-          <FormControlLabel
+          {/*<FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
-          <ForgotPassword open={showForgotPw} handleClose={handleClose} />
-          <Button
+          />*/}
+          <ForgotPassword show={showForgotPw} handleClose={handleClose} />
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
+            loading={isLoading}
             onClick={validateInputs}
           >
             { textFields.submitBtn }
-          </Button>
+          </LoadingButton>
           <Typography sx={{ textAlign: 'center' }}>
           {textFields.toggleTip }{' '}
             <span>
@@ -271,6 +264,5 @@ export default function LoginForm(props: ILoginFormProps) {
           </Typography>
         </Box>
       </Card>
-    </SignInContainer>
   );
 }

@@ -1,12 +1,12 @@
+import * as React from 'react';
 import './App.css';
 import Navigation from "./nav/Navigation";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Login from './login/Login';
-import { useAuth } from './hooks/useAuth';
-
 
 const theme = createTheme({
   palette: {
+    mode: "dark",
     primary: {
       main: '#009688'
     },
@@ -17,10 +17,10 @@ const theme = createTheme({
 });
 
 function App() {
-  const { user } = useAuth();
-  const content = user ?
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const content = loggedIn ?
       <Navigation />
-    : <Login />
+    : <Login onLogin={setLoggedIn} />
 
   return (
     <div id="App">

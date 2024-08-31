@@ -19,14 +19,14 @@ type User struct {
 }
 
 type Device struct {
-  device_id string `json:"deviceId"`
-  name string `json:"name"`
+  DeviceId string `json:"deviceId"`
+  Name string `json:"name"`
 }
 
 type DeviceConfigArgs struct {
-  name string `json:"name"`
-  ssid string `json:"ssid"`
-  password string `json:"password"`
+  Name string `json:"name"`
+  Ssid string `json:"ssid"`
+  Password string `json:"password"`
 }
 
 // NewApp creates a new App application struct
@@ -74,12 +74,12 @@ MOCK METHOD, to be relocated and implemented later
 func (a *App) GetDeviceList(userId int) []Device {
   return []Device {
     {
-      device_id: "testid1",
-      name: "testdevice1",
+      DeviceId: "testid1",
+      Name: "testdevice1",
     },
     {
-      device_id: "testid2",
-      name: "testdevice2",
+      DeviceId: "testid2",
+      Name: "testdevice2",
     },
   }
 }
